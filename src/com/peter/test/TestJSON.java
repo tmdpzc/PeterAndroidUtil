@@ -1,9 +1,13 @@
 package com.peter.test;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
@@ -28,35 +32,38 @@ public class TestJSON {
 		// }
 		// String json = JSONUtil.toJSON(map);
 		// System.out.println(json);
-//		AssetManager am = context.getAssets();
-//		InputStream open = am.open("clearprocess.filter");
-//		if (open == null) {
-//			System.out.println("文件不存在");
-//		}
-//
-//		BufferedReader rd = new BufferedReader(new InputStreamReader(open));
-//		Map<String, String> map = new HashMap<String, String>();
-//		for (String line = rd.readLine(); line != null; line = rd.readLine()) {
-//			if (line == null || line.length() == 0) {
-//				continue;
-//			}
-//			if (line.charAt(0) == '[') {
-//				continue;
-//			}
-//			String[] split = line.split("=");
-//			map.put(split[0], split[1]);
-//			System.out.println(line);
-//		}
-//		String json = JSONUtil.toJSON(map);
-//		System.out.println(json);
-//		File exFile = context.getExternalCacheDir();
-//		File file = new File(exFile, "process_list.json");
-//		file.createNewFile();
-//		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-//		writer.write(json);
-//		writer.flush();
-//		writer.close();
-		new TestThread2(1000).start();
+
+		// new TestThread2(1000).start();
+	}
+	/**
+	 * 将原来的Ini 脚本转换为Json脚本
+	 * @param context
+	 * @param assetFile
+	 * @throws IOException
+	 */
+	private static void generateJson(Context context, String assetFile)
+			throws IOException {
+		AssetManager am = context.getAssets();
+		InputStream open = am.open(assetFile);
+		if (open == null) {
+			System.out.println("文件不存在");
+		}
+
+		BufferedReader rd = new BufferedReader(new InputStreamReader(open));
+		Map<String, String> map = new HashMap<String, String>();
+		for (String line = rd.readLine(); line != null; line = rd.readLine()) {
+			if (line == null || line.length() == 0) {
+				continue;
+			}
+			if (line.charAt(0) == '[') {
+				continue;
+			}
+			String[] split = line.split("=");
+			map.put(split[0], split[1]);
+			System.out.println(line);
+		}
+		String json = JSONUtil.toJSON(map);
+		System.out.println("XZD:" + json);
 	}
 
 	/**
@@ -66,31 +73,27 @@ public class TestJSON {
 	 */
 	public static class TestThread extends Thread {
 
-		
-		private int  times = 0;
-		private int  count = 0;
-		
+		private int times = 0;
+		private int count = 0;
 
 		public TestThread(int times) {
 			super();
 			this.times = times;
 		}
 
-
-
 		@Override
 		public void run() {
 			int i = 0;
 			long _beginTime = System.currentTimeMillis();
-			while ( count < times) {
+			while (count < times) {
 				count++;
 				doWork();
 			}
 			long _endTime = System.currentTimeMillis();
 			System.out.println("用时：" + (_endTime - _beginTime));
 		}
-		
-		private void doWork(){
+
+		private void doWork() {
 			try {
 				AssetManager am = AppContext.getInstance().getAssets();
 				InputStream open = am.open("process.json");
@@ -98,23 +101,24 @@ public class TestJSON {
 					System.out.println("文件不存在");
 				}
 
-				BufferedReader rd = new BufferedReader(new InputStreamReader(open));
+				BufferedReader rd = new BufferedReader(new InputStreamReader(
+						open));
 				StringBuilder sb = new StringBuilder();
-				for (String line = rd.readLine(); line != null; line = rd.readLine()) {
+				for (String line = rd.readLine(); line != null; line = rd
+						.readLine()) {
 					if (line == null || line.length() == 0) {
 						continue;
 					}
 					sb.append(line);
 				}
 				Map<String, Object> map = JSONUtil.getMap(sb.toString());
-			
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	
 	/**
 	 * 
 	 * @author peizicheng@gmail.com
@@ -122,29 +126,26 @@ public class TestJSON {
 	 */
 	public static class TestThread2 extends Thread {
 
-		private int  times = 0;
-		private int  count = 0;
-		
+		private int times = 0;
+		private int count = 0;
 
 		public TestThread2(int times) {
 			super();
 			this.times = times;
 		}
 
-
-
 		@Override
 		public void run() {
 			long _beginTime = System.currentTimeMillis();
-			while ( count < times) {
+			while (count < times) {
 				count++;
 				doWork();
 			}
 			long _endTime = System.currentTimeMillis();
 			System.out.println("用时：" + (_endTime - _beginTime));
 		}
-		
-		private void doWork(){
+
+		private void doWork() {
 			try {
 				AssetManager am = AppContext.getInstance().getAssets();
 				InputStream open = am.open("clearprocess.filter");

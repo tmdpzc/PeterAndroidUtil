@@ -12,34 +12,42 @@ import com.peter.android.Ruler;
 import com.peter.asyncui.core.Event;
 import com.peter.asyncui.core.Schema;
 import com.peter.asyncui.core.android.BaseEventFragmentActivity;
+import com.peter.test.TestAssetConfig;
 import com.peter.test.TestJSON;
 import com.peter.test.TestUtil;
 import com.peter.watcher.Watcher;
 import com.peter.watcher.WatcherManager;
 import com.peter.watcher.WatcherManagerImpl;
 
-public class MainActivity extends BaseEventFragmentActivity implements OnClickListener {
-	
+public class MainActivity extends BaseEventFragmentActivity implements
+		OnClickListener {
+
 	WatcherManager wm = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		wm = Ruler.wm();
 		wm.addWatcher(new Watcher(0, null) {
-			
+
 			@Override
 			public Event doWatch() {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
 			@Override
 			public void dispatchEvent(Event event) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
+		try {
+			TestAssetConfig.testAsset(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -12,12 +12,12 @@ import com.peter.android.Ruler;
 import com.peter.asyncui.core.Event;
 import com.peter.asyncui.core.Schema;
 import com.peter.asyncui.core.android.BaseEventFragmentActivity;
+import com.peter.asyncui.watcher.Watcher;
+import com.peter.asyncui.watcher.WatcherManager;
+import com.peter.asyncui.watcher.WatcherManagerImpl;
 import com.peter.test.TestAssetConfig;
 import com.peter.test.TestJSON;
 import com.peter.test.TestUtil;
-import com.peter.watcher.Watcher;
-import com.peter.watcher.WatcherManager;
-import com.peter.watcher.WatcherManagerImpl;
 
 public class MainActivity extends BaseEventFragmentActivity implements
 		OnClickListener {
@@ -29,7 +29,7 @@ public class MainActivity extends BaseEventFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		wm = Ruler.wm();
-		wm.addWatcher(new Watcher(0, null) {
+		wm.addWatcher(new Watcher(0, "simple1") {
 
 			@Override
 			public Event doWatch() {

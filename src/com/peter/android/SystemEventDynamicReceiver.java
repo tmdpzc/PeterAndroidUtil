@@ -22,6 +22,9 @@ public class SystemEventDynamicReceiver extends BroadcastReceiver{
 	 */
 	private void registeBroadcast(Context context,BroadcastReceiver receiver){
 		IntentFilter filter = new IntentFilter();
+		/**
+		 * 注册广播
+		 */
 		filter.addAction(Intent.ACTION_SCREEN_OFF);
 		filter.addAction(Intent.ACTION_SCREEN_ON);
 		context.registerReceiver(receiver, filter);

@@ -1,35 +1,57 @@
 package com.peter.task;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import com.peter.asyncui.core.Event;
+import android.os.AsyncTask;
 
 /**
  * 单个的任务
+ * 
  * @author peizicheng@conew.com
+ * @param <V>
  * @date 2013-10-25
  */
-public class Task  implements Comparable<Task>, Callable<Event>{
-	
-	private static final AtomicInteger sIncCounter = new AtomicInteger(0);
-	
+public abstract class Task {
+
 	/**
-	 * 调度的权重
+	 * Indicates the current status of the task. Each status will be set only
+	 * once during the lifetime of a task.
 	 */
-	private int weight = sIncCounter.getAndIncrement();
-
-	@Override
-	public int compareTo(Task other) {
-		return this.weight > other.weight ? 1: (this.weight == other.weight) ? 0 : -1;
+	public enum Status {
+		/**
+		 * Indicates that the task has not been executed yet.
+		 */
+		PENDING,
+		/**
+		 * Indicates that the task is running.
+		 */
+		RUNNING,
+		/**
+		 * Indicates that the task is paused
+		 */
+		PAUSED,
+		/**
+		 * Indicates that {@link AsyncTask#onPostExecute} has finished.
+		 */
+		FINISHED,
 	}
 
-	@Override
-	public Event call() throws Exception {
-		return null;
+	private int _id = 0;
+
+	private TaskTimerStamp timerStamp = new TaskTimerStamp();
+
+	public abstract void doWork();
+
+	public void process() {
+		
+		
 	}
-	
-	
-	
-	
+
+	public abstract int getId();
+
+	protected void setId(int id) {
+		this._id = id;
+	}
+
+	public TaskTimerStamp getTimerStamp() {
+		return timerStamp;
+	}
 }

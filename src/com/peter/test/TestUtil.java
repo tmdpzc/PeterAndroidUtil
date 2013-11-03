@@ -1,9 +1,9 @@
 package com.peter.test;
 
 import com.peter.asyncui.core.Event;
-import com.peter.watcher.Watcher;
-import com.peter.watcher.WatcherManager;
-import com.peter.watcher.WatcherManagerImpl;
+import com.peter.asyncui.watcher.Watcher;
+import com.peter.asyncui.watcher.WatcherManager;
+import com.peter.asyncui.watcher.WatcherManagerImpl;
 
 public class TestUtil {
 	public static final void testWatcher() {

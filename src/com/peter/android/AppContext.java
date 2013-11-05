@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 public class AppContext extends Application{
+	
 	private static Context sInstance = null;
 	
 	public synchronized static Context getInstance(){

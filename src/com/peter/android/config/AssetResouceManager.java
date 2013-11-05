@@ -10,15 +10,16 @@ import android.content.Context;
  */
 public class AssetResouceManager {
 
-	private static Map<String, AssetResouce> cache = new HashMap<String, AssetResouce>();
+	private static Map<String, CustomResouce> cache = new HashMap<String, CustomResouce>();
 
 	private AssetResouceManager() {
+		
 	}
 
-	public synchronized static AssetResouce getResouce(Context context,
+	public synchronized static CustomResouce getResouce(Context context,
 			String fileName) throws Exception {
 
-		AssetResouce ar = cache.get(fileName);
+		CustomResouce ar = cache.get(fileName);
 		if (ar != null) {
 			return ar;
 		}

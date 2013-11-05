@@ -3,7 +3,7 @@ package com.peter.android.config;
 /**
  * Asset 同时发布的设置
  */
-public interface AssetResouce {
+public interface CustomResouce {
 	
 	public String getName();
 	

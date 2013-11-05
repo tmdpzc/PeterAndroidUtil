@@ -1,7 +1,7 @@
 package com.peter.android.config;
 
 
-public class CacheableResource implements AssetResouce {
+public class CacheableResource implements CustomResouce {
 
 	@Override
 	public int getInt(String key, int def) {

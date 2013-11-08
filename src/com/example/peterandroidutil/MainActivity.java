@@ -1,7 +1,5 @@
 package com.example.peterandroidutil;
 
-import java.io.IOException;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,10 +12,7 @@ import com.peter.asyncui.core.Schema;
 import com.peter.asyncui.core.android.BaseEventFragmentActivity;
 import com.peter.asyncui.watcher.Watcher;
 import com.peter.asyncui.watcher.WatcherManager;
-import com.peter.asyncui.watcher.WatcherManagerImpl;
 import com.peter.test.TestAssetConfig;
-import com.peter.test.TestJSON;
-import com.peter.test.TestUtil;
 
 public class MainActivity extends BaseEventFragmentActivity implements
 		OnClickListener {

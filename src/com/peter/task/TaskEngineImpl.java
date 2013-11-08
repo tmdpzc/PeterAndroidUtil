@@ -4,23 +4,22 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import android.R.integer;
 
 /**
  * Task engine 实现类
  */
 public class TaskEngineImpl implements TaskEngine {
 
-	private static final String LOG_TAG = "TaskEngineImpl";
+	private static final String LOG_TAG = "TE-Impl";
 
 	private static final int CORE_POOL_SIZE = 5;
 	private static final int MAXIMUM_POOL_SIZE = 128;
@@ -33,10 +32,23 @@ public class TaskEngineImpl implements TaskEngine {
 		private final AtomicInteger mCount = new AtomicInteger(1);
 
 		public Thread newThread(Runnable r) {
-			return new Thread(r, "WorkerThread #" + mCount.getAndIncrement());
+			return new Thread(r, "Task-Worker#" + mCount.getAndIncrement());
 		}
 	};
-
+	
+	/**
+	 * An runnable Blocking Queue
+	 */
+	 private static final BlockingQueue<Runnable> sPoolWorkQueue =
+	            new LinkedBlockingQueue<Runnable>(10);
+    /**
+     * An {@link Executor} that can be used to execute tasks in parallel.
+     */
+    public static final Executor THREAD_POOL_EXECUTOR
+            = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,
+                    TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
+	
+	/*锁机制*/
 	private Object mLock = new Object();
 	/**
 	 * 所有的通知器
@@ -46,7 +58,9 @@ public class TaskEngineImpl implements TaskEngine {
 	 * 缓存Map
 	 */
 	private Map<Integer, Task> mTasks = Collections.synchronizedMap(new HashMap<Integer, Task>());
-	
+	/**
+	 * 控制器
+	 */
 	private TaskController mController = new TaskController() {
 
 		@Override
@@ -90,13 +104,17 @@ public class TaskEngineImpl implements TaskEngine {
 
 	}
 
-	private class InterTask implements Runnable {
+	private static class InnerRunnable implements Runnable {
 
 		private Task task;
-
+		
+		public InnerRunnable(Task task) {
+			super();
+			this.task = task;
+		}
 		@Override
 		public void run() {
-
+			
 		}
 
 	}
@@ -131,7 +149,6 @@ public class TaskEngineImpl implements TaskEngine {
 
 	private boolean isAlive() {
 		return true;
-		// TODO 增加控制方法
 	}
 
 	protected ExecutorService getWorkers() {

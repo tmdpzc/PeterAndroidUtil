@@ -17,7 +17,7 @@ public class AppException extends Exception {
 		super(detailMessage, throwable);
 	}
 	
-	private int  type;
+	private int type;
 	
 	public static final int RESOUCE = 0x0013;
 	

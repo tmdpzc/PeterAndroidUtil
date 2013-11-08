@@ -7,14 +7,14 @@ public interface TaskController {
 	/**
 	 * Cancel the task
 	 */
-	public void cancel(int id);
+	public void cancel(int taskid);
 	/**
 	 * Pause the task 
 	 */
-	public void pause(int id);
+	public void pause(int taskid);
 	/**
 	 * Resume the task 
 	 */
-	public void resume(int id);
+	public void resume(int taskid);
 	
 }

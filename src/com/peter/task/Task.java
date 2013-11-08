@@ -1,6 +1,7 @@
 package com.peter.task;
 
 import android.os.AsyncTask;
+import android.text.GetChars;
 
 /**
  * 单个的任务
@@ -35,6 +36,8 @@ public abstract class Task {
 	}
 
 	private int _id = 0;
+	
+	private volatile Status statu;
 
 	private TaskTimerStamp timerStamp = new TaskTimerStamp();
 
@@ -53,5 +56,9 @@ public abstract class Task {
 
 	public TaskTimerStamp getTimerStamp() {
 		return timerStamp;
+	}
+	
+	public Status getStatus(){
+		return statu;
 	}
 }

@@ -22,6 +22,9 @@ public abstract class BaseEventFragment extends Fragment implements EventListene
 		Ruler.em().unsubscribeEvent(Schema.UI_SCHEMA, this);
 	}
 
+	/**
+	 * 必须做线程转换
+	 */
 	@Override
 	public void onEven(final Event event) {
 		 getActivity().runOnUiThread(new Runnable() {

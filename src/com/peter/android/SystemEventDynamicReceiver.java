@@ -13,7 +13,7 @@ public class SystemEventDynamicReceiver extends BroadcastReceiver{
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		
+		//
 	}
 	/**
 	 * 注册该广播

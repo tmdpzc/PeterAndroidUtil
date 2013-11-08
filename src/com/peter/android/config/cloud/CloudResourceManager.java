@@ -32,9 +32,6 @@ public class CloudResourceManager {
 		return ar;
 	}
 
-	private void shinkIfNeed(){
-		
-	}
 
 	public void registerOnCloudPreferenceListener(OnCloudPreferecensChangedListenear listenear) {
 

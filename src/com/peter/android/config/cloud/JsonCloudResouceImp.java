@@ -12,7 +12,9 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+import com.peter.android.AppException;
 import com.peter.toolbox.IOUtil;
+
 /**
  * 云端配置文案
  */
@@ -26,17 +28,11 @@ public class JsonCloudResouceImp implements CloudResource {
 
 	private String name;
 
-	public JsonCloudResouceImp(Context context, String fileName) {
+	public JsonCloudResouceImp(Context context, String fileName) throws AppException {
 		if (context == null || fileName == null) {
 			throw new NullPointerException("参数不能为Null");
 		}
-		try {
-			init(context, fileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		init(context, fileName);
 	}
 
 	/**
@@ -44,11 +40,8 @@ public class JsonCloudResouceImp implements CloudResource {
 	 * 
 	 * @param context
 	 * @param fileName
-	 * @throws IOException
-	 * @throws JSONException
-	 * @throws Exception
 	 */
-	protected void init(Context context, String fileName) throws IOException, JSONException {
+	protected void init(Context context, String fileName) throws AppException {
 		name = fileName;
 		InputStream open = null;
 		try {
@@ -65,6 +58,10 @@ public class JsonCloudResouceImp implements CloudResource {
 				sb.append(line);
 			}
 			jsonObject = new JSONObject(sb.toString());
+		} catch (IOException e) {
+			throw AppException.resouce("IO", e);
+		} catch (JSONException e) {
+			throw AppException.resouce("Json Formatter error", e);
 		} finally {
 			IOUtil.closeSilently(open);
 		}
